@@ -1,40 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function PokeCard({ currentPage, currentType }) {
-    const [pokemonList, setPokemonList] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                let apiUrl = `https://pokeapi.co/api/v2/pokemon/?limit=12&offset=${(currentPage - 1) * 12}`;
-
-                if (currentType !== '') {
-                    apiUrl += `&type=${currentType}`;
-                }
-
-                const response = await axios.get(apiUrl);
-                const results = response.data.results;
-                const pokemonData = await Promise.all(results.map(async (pokemon) => {
-                    const detailResponse = await axios.get(pokemon.url);
-                    return detailResponse.data;
-                }));
-                setPokemonList(pokemonData);
-                setIsLoading(false);
-            } catch (error) {
-                console.error('Error fetching Pokemon data:', error);
-            }
-        };
-
-        fetchData();
-    }, [currentPage, currentType]);
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
+export default function PokeCard({ pokemonList }) {
     return (
         <div className="row mt-5">
             {pokemonList.map((pokemon, index) => (

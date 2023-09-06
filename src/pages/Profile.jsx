@@ -26,7 +26,7 @@ export default function PokemonProfile() {
         return <div className='container-fluid text-center m-5'>Loading...</div>;
     }
 
-    const { name, types, height, weight, abilities, sprites } = pokemonData;
+    const { name, types, height, weight, abilities, sprites, stats, base_experience } = pokemonData;
 
     return (
         <div className="container-fluid text-center mt-5">
@@ -62,6 +62,24 @@ export default function PokemonProfile() {
                                     <p className='text-start fw-normal'>{abilities.map(ability => ability.ability.name).join(', ')}</p>
                                 </div>
                             </div>
+                            <hr />
+                            <div className="container text-start">
+                                <h5>Stats</h5>
+                                <ul>
+                                    {stats.map(stat => (
+                                        <li key={stat.stat.name}>{stat.stat.name}: {stat.base_stat}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="container text-start">
+                                <h5>Ability</h5>
+                                <ul>
+                                    {abilities.map(ability => (
+                                        <li key={ability.ability.name}>{ability.ability.name}</li>
+                                    ))}
+                                </ul>
+                            </div>
+
                         </div>
                     </div>
                 </div>
